@@ -35,14 +35,23 @@ and open the template in the editor.
             </div>
             <div class="MD-content">
                 <br>
-                <br>
                 <div id="Question">
-                    <canvas id="myChart" width="100" height="20"></canvas>
+                    <canvas id="myChartSmile" width="100" height="20"></canvas>
                     Hello!!!
                     <br>
                     :)
                 </div>
-                <br>
+                <div id="Result" style="display: none;">
+                    Here will be graph and the result 'Who You are in Comics' or I did it :)
+                    <br>
+                    <div id="ResultIAm" style="font-size: x-large; color: rgb(0,215,215)">
+                        You are IAm.name 
+                    </div>
+                    <div>
+                        <img alt="" src='js/characters/img/ZEmpty.png' id="CharacterImage" style='width: 30%;'/>
+                    </div>
+                    <canvas id='myChart' width='100' height='20'></canvas>
+                </div>
                 <br>
             </div>
 
@@ -68,6 +77,17 @@ and open the template in the editor.
 
                                     fuzzySetStart();
                                     document.getElementById('QuestionHeader').innerHTML = "Answer";
+                                    document.getElementById('Question').style.display = "none";
+                                    document.getElementById('Result').style.display = "block";
+                                    document.getElementById('ResultIAm').innerHTML = "You are " + IAm.name;
+                                    document.getElementById("CharacterImage").src = "js/characters/img/" + IAm.img;
+                                    document.getElementById("CharacterImage").onload = function () {
+                                        //alert('картинка существует');
+                                    };
+                                    document.getElementById("CharacterImage").onerror = function () {
+                                        alert('картинка не существует');
+                                        document.getElementById("CharacterImage").src = "js/characters/img/ZEmpty.png";
+                                    };
 
                                 }
                                 questionN++;
