@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="theme/style.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/videoBG/videoBG.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/modalDiv/modalDiv.css" rel="stylesheet" type="text/css"/>
+        <link href="theme/linkDesigner/linkDesigner.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="theme/ideas-icon.png">
+    </head>
+    <body>
+        <div>v. 0.1 alpha - 27.10.2016 (fuzzy set)</div>
+        <div>v. 0.1 beta - 05.11.2016 (neuran network)</div>
+        <div class="videoBG is_overlay">
+            <video id="video" autoplay="autoplay" loop="loop" preload="auto">
+                <source src="theme/background/DreamScene.mp4">
+                <source src="theme/background/DreamScene.webm" type="video/webm">
+            </video>
+        </div>
+
+        <div class="MD MD-background MD-light">
+            <div class="MD-header">
+                WELCOME TO US
+            </div>
+            <div class="MD-content">
+                <br>
+                <br>
+                <u>SELECT THE OPTION:</u>
+                <br>
+                <br>
+            </div>
+
+            <div class="MD-option" onclick="location.href = 'fuzzySet.html';">
+                *Who I Am in Comics*
+                <br>
+                (fuzzy set)
+            </div>
+            <div class="MD-option" onclick="location.href = 'neuranNetwork.html';">
+                *Who I Am in Comics* 
+                <br>
+                (neuran network)
+            </div>
+            <div class="MD-option" onclick="document.getElementById('About').style.display = 'block';">
+                ABOUT
+            </div>
+        </div>
+        <div id = "About" class="MD MD-background MD-light" style="background-color: rgba(0,0,0,0.9); width: 50%; height: 50%; left: 25%; top: 25%; display: none;">
+            <div class="MD-close-btn" onclick="document.getElementById('About').style.display = 'none';">X</div>
+            <div class="MD-header">
+                ABOUT
+            </div>
+            <div class="MD-content">
+                <br>
+                <div style="text-align: left;">
+                    <u>Autors</u>
+                    <br>
+                    <br>
+                    <u>Licensing</u>
+                    <br>
+                    <br>Purpose of use: 
+                    <br>It is lab work of students. 
+                    <br>The purpose of the use is non-commercial.
+                    <br>Created in educational purpose.
+                    <br>
+                    All data qualifies as <a href="https://en.wikipedia.org/wiki/Fair_use">fair use</a>.
+                    <br>
+                    <a href="https://www.youtube.com/watch?v=FUJu9YWYaTE">Background</a> is <a href="https://ru.wikipedia.org/wiki/Creative_Commons">Creative Commons</a>.
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

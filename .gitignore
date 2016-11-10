@@ -1,0 +1,3 @@
+# Ignore all pictures. But ZEmpty.png is not ignore
+/js/characters/img/*
+!/js/characters/img/ZEmpty.png

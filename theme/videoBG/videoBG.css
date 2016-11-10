@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23.10.2016, 18:10:31
+    Author     : KnightDanila
+*/
+
+.is_overlay{ 
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    z-index: -1;
+}
+
+.videoBG {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    overflow: hidden;
+}
+
+.videoBG > video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .videoBG > video { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+    .videoBG > video { width: 300%; left: -100%; }
+}
+/* Если есть поддержка object-fit (Chrome/Chrome для Android, Safari в iOS 8 и Opera), используем его: */
+@supports(object-fit:cover){
+    .videoBG > video {
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+    }
+}
