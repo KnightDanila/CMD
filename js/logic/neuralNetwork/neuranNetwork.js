@@ -37,11 +37,14 @@ inputNeurons = [
         ],
         answers: [],
         calculate: function () {
-
+            
             return [];
         }
     }
 ];
+
+var networkWeight = [1,1,1];
+
 hiddenNeurons = {
     name: "Hair",
     weight: 1
@@ -49,9 +52,12 @@ hiddenNeurons = {
 
 outputNeuron = {
     calculate: function () {
-
+        inputNeurons[0];
+        return 0;
     }
 };
+
+
 
 
 var questionN = 0;
