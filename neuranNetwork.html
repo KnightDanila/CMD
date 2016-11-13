@@ -36,13 +36,14 @@ and open the template in the editor.
             <div class="MD-content">
                 <br>
                 <div id="Question">
+                    So, who are you in comics?!
                     <canvas id="myChartSmile" width="100" height="20"></canvas>
                     Hello!!!
+
                     <br>
                     :)
                 </div>
                 <div id="Result" style="display: none;">
-                    Here will be graph and the result 'Who You are in Comics' or I did it :)
                     <br>
                     <div id="ResultIAm" style="font-size: x-large; color: rgb(0,215,215)">
                         You are IAm.name 
@@ -55,51 +56,68 @@ and open the template in the editor.
                 <br>
             </div>
 
+            <div id="AnswerOptions"></div>
             <div id="InputOption" class="MD-option">
                 <input type="text" id="Answer" onkeydown = "if (event.keyCode == 13)
                             answer();" > 
                 <script>
+                    var INPUT_HTML = false;
                     function answer() {
+                        document.getElementById('AnswerOptions').innerHTML = "";
                         document.getElementById('QuestionN').innerHTML = questionN + 1;
-                        if (START === 1) {
-                            if (questionN <= questions.length) {
-                                answers[answersEnum[questionN - 1]] = (questionN === 1) ? ((document.getElementById('Answer').value === "Y" || document.getElementById('Answer').value === "y") ? "female" : "male") : (document.getElementById('Answer').value);
-                                if (questionN < questions.length) {
-                                    document.getElementById('Question').innerHTML = questions[questionN];
-                                } else {
-                                    document.getElementById('Answer').style.visibility = "hidden";
-                                    document.getElementById('Enter').style.display = "none";
-                                    document.getElementById('Back').style.display = "block";
-                                    document.getElementById('Back').onclick = function () {
-                                        location.href = 'index.html';
-                                    };
-                                    document.getElementById('InputOption').style.display = "none";
-
-                                    fuzzySetStart();
-                                    document.getElementById('QuestionHeader').innerHTML = "Answer";
-                                    document.getElementById('Question').style.display = "none";
-                                    document.getElementById('Result').style.display = "block";
-                                    document.getElementById('ResultIAm').innerHTML = "You are " + IAm.name;
-                                    document.getElementById("CharacterImage").src = "js/characters/img/" + IAm.img;
-                                    document.getElementById("CharacterImage").onload = function () {
-                                        //alert('картинка существует');
-                                    };
-                                    document.getElementById("CharacterImage").onerror = function () {
-                                        alert('картинка не существует');
-                                        document.getElementById("CharacterImage").src = "js/characters/img/ZEmpty.png";
-                                    };
-
-                                }
-                                questionN++;
+                        if (questionN < questionsSize) {
+                            //answers[answersEnum[questionN - 1]] = (questionN === 1) ? ((document.getElementById('Answer').value === "Y" || document.getElementById('Answer').value === "y") ? "female" : "male") : (document.getElementById('Answer').value);
+                            //document.getElementById('Question').innerHTML = questions[questionN];
+                            QA();
+                            if (INPUT_HTML){
+                                NN_Answer(document.getElementById('Answer').value);
                             }
-                            document.getElementById('Answer').value = "";
-                        } else {
-                            document.getElementById('Question').innerHTML = questions[questionN];
-                            document.getElementById('Answer').value = "";
+                            if (answers == 1333) {
+                                document.getElementById('InputOption').style.visibility = "visible";
+                                document.getElementById('Enter').style.display = "block";
+                                INPUT_HTML = true;
+                            } else {
+                                document.getElementById('InputOption').style.visibility = "hidden";
+                                document.getElementById('Enter').style.display = "none";
+                                INPUT_HTML = false;
+                            }
+
+                            document.getElementById('Question').innerHTML = question;
+
+                            for (var i = 0; i < answers.length; i++) {
+                                document.getElementById('AnswerOptions').innerHTML += "<div onclick= 'NN_Answer(" + i + "); answer();' class='MD-option'>" + answers[i] + "</div>";
+                            }
+
+
                             questionN++;
-                            START++;
+                        } else {
+                            QA();
+                            document.getElementById('Answer').style.visibility = "hidden";
+                            document.getElementById('Enter').style.display = "none";
+                            document.getElementById('Back').style.display = "block";
+                            document.getElementById('Back').onclick = function () {
+                                location.href = 'index.html';
+                            };
+                            document.getElementById('InputOption').style.display = "none";
+
+                            // fuzzySetStart();
+                            document.getElementById('QuestionHeader').innerHTML = "Answer";
+                            document.getElementById('Question').style.display = "none";
+                            document.getElementById('Result').style.display = "block";
+                            document.getElementById('ResultIAm').innerHTML = "You are " + IAm.name;
+                            document.getElementById("CharacterImage").src = "js/characters/img/" + IAm.img;
+                            document.getElementById("CharacterImage").onload = function () {
+                                //alert('картинка существует');
+                            };
+                            document.getElementById("CharacterImage").onerror = function () {
+                                alert('картинка не существует');
+                                document.getElementById("CharacterImage").src = "js/characters/img/ZEmpty.png";
+                            };
+
                         }
+                        document.getElementById('Answer').value = "";
                     }
+
                 </script>
             </div>
             <div id = "Enter" class="MD-option" onclick="answer();">ENTER</div>
