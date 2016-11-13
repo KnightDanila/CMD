@@ -9,7 +9,7 @@ var FINISH = 0;
 var questionN = 0;
 
 var questions = [
-    'You are female? (Y/N)',
+    'Are you a woman? (Y/N)',
     'What is your height? (cm)',
     'How old are you? (years)',
     'What is your weight? (kg)'
