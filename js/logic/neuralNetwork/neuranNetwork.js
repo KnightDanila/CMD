@@ -150,23 +150,23 @@ var rules = {
         fuzzCharacterLooks.incredible = (fuzzAnswers[2] /*tall*/ + fuzzAnswers[5] /*old*/ + fuzzAnswers[8] /*big weight*/) / 3;
 
         if (FINISH === 0) {
-            alert("Your character looks Shallow: " + fuzzCharacterLooks.shallow);
-            alert("Your character looks Impressive: " + fuzzCharacterLooks.impressive);
-            alert("Your character looks Incredible: " + fuzzCharacterLooks.incredible);
+            addToLog("Your character looks Shallow: " + fuzzCharacterLooks.shallow);
+            addToLog("Your character looks Impressive: " + fuzzCharacterLooks.impressive);
+            addToLog("Your character looks Incredible: " + fuzzCharacterLooks.incredible);
         }
         return fuzzCharacterLooks;
     }
 };
 
 function fuzzySetStart() {
-    alert("Answers: " + answers.gender + ", " + answers.height + ", " + answers.years + ", " + answers.weight);
+    addToLog("Answers: " + answers.gender + ", " + answers.height + ", " + answers.years + ", " + answers.weight);
     fuzzAnswers = fuzzification(answers);
     fuzzCharacterLooks = rules.calculate(fuzzAnswers);
     defuzzCharacter = defuzzification(fuzzCharacterLooks);
-    alert(defuzzCharacter);
+    addToLog(defuzzCharacter);
     FINISH = 1;
     IAm = WhoIAm(defuzzCharacter);
-    alert(IAm.name);
+    addToLog(IAm.name);
     defuzzificationChart();
 
     document.getElementById('Question').innerHTML = "\
@@ -184,17 +184,17 @@ function fuzzification(answers) {
     var fuzzAnswers = [];
 
     if (FINISH === 0) {
-        alert(
+        addToLog(
                 "height-short: " + (fuzzAnswers[0] = leftFunc(answers.height, terms.height.middle[0], terms.height.short[1])) + ", " +
                 "height-middle: " + (fuzzAnswers[1] = middleFunc(answers.height, terms.height.middle[0], terms.height.tall[0], terms.height.middle[1])) + ", " +
                 "height-tall: " + (fuzzAnswers[2] = rightFunc(answers.height, terms.height.tall[0], terms.height.middle[1]))
                 );
-        alert(
+        addToLog(
                 "years-young: " + (fuzzAnswers[3] = leftFunc(answers.years, terms.years.middle[0], terms.years.young[1])) + ", " +
                 "years-middle: " + (fuzzAnswers[4] = middleFunc(answers.years, terms.years.middle[0], terms.years.old[0], terms.years.middle[1])) + ", " +
                 "years-old: " + (fuzzAnswers[5] = rightFunc(answers.years, terms.years.old[0], terms.years.middle[1]))
                 );
-        alert(
+        addToLog(
                 "weight-low: " + (fuzzAnswers[6] = leftFunc(answers.weight, terms.weight.middle[0], terms.weight.low[1])) + ", " +
                 "weight-middle: " + (fuzzAnswers[7] = middleFunc(answers.weight, terms.weight.middle[0], terms.weight.big[0], terms.weight.middle[1])) + ", " +
                 "weight-big: " + (fuzzAnswers[8] = rightFunc(answers.weight, terms.weight.big[0], terms.weight.middle[1]))
@@ -319,4 +319,8 @@ function rightFunc(x, a, b) {
     if (x >= b) {
         return 1;
     }
+}
+
+function addToLog(text) {
+    document.getElementById('log').innerHTML += '<br>' + text;
 }

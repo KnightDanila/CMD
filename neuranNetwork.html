@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>CMD</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="theme/style.css" rel="stylesheet" type="text/css"/>
@@ -85,8 +85,8 @@ and open the template in the editor.
                                         //alert('картинка существует');
                                     };
                                     document.getElementById("CharacterImage").onerror = function () {
-                                        alert('картинка не существует');
-                                        document.getElementById("CharacterImage").src = "js/characters/img/ZEmpty.png";
+                                        //alert('картинка не существует');
+                                        document.getElementById("CharacterImage").src = "js/characters/img/anonim.jpg";
                                     };
 
                                 }
@@ -104,6 +104,13 @@ and open the template in the editor.
             </div>
             <div id = "Enter" class="MD-option" onclick="answer();">ENTER</div>
             <div id = "Back" class="MD-option" style="display: none;" >BACK</div>
+            <div class="accordion vertical">
+                <input type="checkbox" id="checkbox-1" name="checkbox-accordion" />
+                <label for="checkbox-1">Log</label>
+                <div class="content" id="log">
+                    Logger
+                </div>
+            </div>
         </div>
     </body>
 </html>
