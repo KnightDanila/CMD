@@ -40,21 +40,20 @@ var defuzzCharacter = 0;
 var IAm;
 
 var terms = {
-    inf: 10000,
     height: {
         short: [0, 170],
         middle: [160, 180],
-        tall: [170, this.inf]
+        tall: [170, 1000]
     },
     years: {
         young: [0, 35],
         middle: [20, 50],
-        old: [35, this.inf]
+        old: [35, 1000]
     },
     weight: {
         low: [0, 70],
         middle: [60, 80],
-        big: [70, this.inf]
+        big: [70, 1000]
     },
     immortal: {
         //???
@@ -62,7 +61,7 @@ var terms = {
     characterLooks: {
         shallow: [0, 50],
         impressive: [25, 75],
-        incredible: [50, this.inf]
+        incredible: [50, 100]
     }
 };
 
@@ -193,6 +192,9 @@ function WhoIAm(defuzzCharacter) {
 
 chartQuality = 1;
 function defuzzificationChart() {
+    /*
+     * ____________________________ L
+     */
     // L type - leftFunc - Left Original Function - which we have in rules
     leftCharacterLooksOriginX = [];
     leftCharacterLooksOriginY = [];
@@ -207,11 +209,53 @@ function defuzzificationChart() {
         leftCharacterLooksDefuzzyX[j] = i;
         leftCharacterLooksDefuzzyY[j] = Math.min(leftCharacterLooksOriginY[j], fuzzCharacterLooks.shallow);
     }
+
     /*
      * Write other middle and right functions :)
      */
+
+    /*
+     *  ____________________________ T
+     */
+    // T type - middleFunc - Middle Original Function - which we have in rules
+    middleCharacterLooksOriginX = [];
+    middleCharacterLooksOriginY = [];
+    for (var j = 0, i = terms.characterLooks.impressive[0]; i <= terms.characterLooks.impressive[1]; i += chartQuality, j++) {
+        middleCharacterLooksOriginX[j] = i;
+        middleCharacterLooksOriginY[j] = middleFunc(middleCharacterLooksOriginX[j], terms.characterLooks.impressive[0], terms.characterLooks.shallow[1], terms.characterLooks.impressive[1]);
+    }
+    // T type - middleFunc - Middle Defuzzy Function - which we get in defuzzification
+    middleCharacterLooksDefuzzyX = [];
+    middleCharacterLooksDefuzzyY = [];
+    for (var j = 0, i = terms.characterLooks.impressive[0]; i <= terms.characterLooks.impressive[1]; i += chartQuality, j++) {
+        middleCharacterLooksDefuzzyX[j] = i;
+        middleCharacterLooksDefuzzyY[j] = Math.min(middleCharacterLooksOriginY[j], fuzzCharacterLooks.impressive);
+    }
+
+    /*
+     *  ____________________________ Gamma
+     */
+    // Gamma type - rightFunc - Right Original Function - which we have in rules
+    rightCharacterLooksOriginX = [];
+    rightCharacterLooksOriginY = [];
+    for (var j = 0, i = terms.characterLooks.incredible[0]; i <= terms.characterLooks.incredible[1]; i += chartQuality, j++) {
+        rightCharacterLooksOriginX[j] = i;
+        rightCharacterLooksOriginY[j] = rightFunc(rightCharacterLooksOriginX[j], terms.characterLooks.incredible[0], terms.characterLooks.impressive[1]);
+    }
+    // Gamma type - rightFunc - Right Defuzzy Function - which we get in defuzzification
+    rightCharacterLooksDefuzzyX = [];
+    rightCharacterLooksDefuzzyY = [];
+    for (var j = 0, i = terms.characterLooks.incredible[0]; i <= terms.characterLooks.incredible[1]; i += chartQuality, j++) {
+        rightCharacterLooksDefuzzyX[j] = i;
+        rightCharacterLooksDefuzzyY[j] = Math.min(rightCharacterLooksOriginY[j], fuzzCharacterLooks.incredible);
+    }
+
     drawChart(leftCharacterLooksOriginX, leftCharacterLooksOriginY, 1, 0.5);
     drawChart(leftCharacterLooksDefuzzyX, leftCharacterLooksDefuzzyY, 1, 1);
+    drawChart(middleCharacterLooksOriginX, middleCharacterLooksOriginY, 1, 0.5);
+    drawChart(middleCharacterLooksDefuzzyX, middleCharacterLooksDefuzzyY, 1, 1);
+    drawChart(rightCharacterLooksOriginX, rightCharacterLooksOriginY, 1, 0.5);
+    drawChart(rightCharacterLooksDefuzzyX, rightCharacterLooksDefuzzyY, 1, 1);
 
 }
 
