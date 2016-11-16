@@ -176,7 +176,7 @@ var characters = [
         "years": 35,
         "gender": "female"
 
-    }, 
+    },
     /*DC Comics | Supergirl | Kara Denvers | Superhuman strength | 171cm | 54kg | woman | alien | Action Comics #252 (May 1959) | blond | Good*/
     {
         "id": 7,
@@ -188,8 +188,10 @@ var characters = [
         "years": 25,
         "gender": "female"
 
-    },
-    //!!! Обновить возраст у всех персонажей ниже
+    }
+    //!!! Обновить возраст у всех персонажей ниже 
+    //!!! И пол тоже так, как я его исправил на male, female в этом году :)
+    /*
     // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
     {
         "id": 8,
@@ -453,6 +455,6 @@ var characters = [
         "weight": 100,
         "years": 25,
         "gender": "man"
-    }
+    }*/
 ];
 //characters[0].
