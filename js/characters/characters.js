@@ -195,8 +195,6 @@ var characters = [
         "eyes": "blue",
         "alignment": "good",
         "race": "alien"
-
-
     },
     /*Marvel Comics | Storm | Ororo Munroe | Weather manipulation | 180cm | 58kg | woman | mutant | Giant-Size X-Men #1(May 1975) | white | Good*/
     {
@@ -215,7 +213,6 @@ var characters = [
         "eyes": "blue",
         "alignment": "good",
         "race": "mutant"
-
     },
     /*DC Comics | Supergirl | Kara Denvers | Superhuman strength | 171cm | 54kg | woman | alien | Action Comics #252 (May 1959) | blond | Good*/
     {
@@ -234,22 +231,28 @@ var characters = [
         "eyes": "blue",
         "alignment": "good",
         "race": "alien"
-
+    },
+    // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
+    {
+        "id": 8,
+        "img": "Wolverine.jpg",
+        "name": "Wolverine",
+        "alterEgo": "James Howlett",
+        "height": 176,
+        "weight": 166,
+        "years": 40,
+        "gender": "male",
+        "hair": {
+            "color": "black",
+            "length": "short"
+        },
+        "eyes": "blue",
+        "alignment": "good",
+        "race": "mutant"
     }
     //!!! Обновить возраст у всех персонажей ниже 
     //!!! И пол тоже так, как я его исправил на male, female в этом году :)
     /*
-     // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
-     {
-     "id": 8,
-     "img": "Wolverine.jpg",
-     "name": "Wolverine",
-     "alterEgo": "James Howlett",
-     "height": 176,
-     "weight": 166,
-     "years": 40,
-     "gender": "man"
-     },
      // DC Comics | Green Lantern | Kyle Rayner | Green Lantern Corps Power Ring | 180cm | 82kg | man | human | Green Lantern (vol. 3) #48 (January 1994) | brown | Not good enough
      {
      "id": 9,
