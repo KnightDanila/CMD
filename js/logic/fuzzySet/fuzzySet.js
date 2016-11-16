@@ -251,11 +251,11 @@ function defuzzificationChart() {
     }
 
     drawChart(leftCharacterLooksOriginX, leftCharacterLooksOriginY, 1, 0.5);
-    drawChart(leftCharacterLooksDefuzzyX, leftCharacterLooksDefuzzyY, 1, 1);
+    drawChart(leftCharacterLooksDefuzzyX, leftCharacterLooksDefuzzyY, 1, 1, "Left");
     drawChart(middleCharacterLooksOriginX, middleCharacterLooksOriginY, 1, 0.5);
-    drawChart(middleCharacterLooksDefuzzyX, middleCharacterLooksDefuzzyY, 1, 1);
+    drawChart(middleCharacterLooksDefuzzyX, middleCharacterLooksDefuzzyY, 1, 1, "Middle");
     drawChart(rightCharacterLooksOriginX, rightCharacterLooksOriginY, 1, 0.5);
-    drawChart(rightCharacterLooksDefuzzyX, rightCharacterLooksDefuzzyY, 1, 1);
+    drawChart(rightCharacterLooksDefuzzyX, rightCharacterLooksDefuzzyY, 1, 1, "Right");
 
 }
 
