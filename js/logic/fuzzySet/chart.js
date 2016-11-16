@@ -23,7 +23,7 @@ function drawChart(arrX, arrY, color, transparent, label){
     data.push({
         data: arrY,
         backgroundColor: [bgColor],
-        label: this.label,
+        label: label,
         borderWidth: 1
     });
     var myChart = new Chart(ctx, {
