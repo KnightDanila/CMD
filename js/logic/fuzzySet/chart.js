@@ -13,7 +13,8 @@ function loadPage() {
     drawChart(x, y);
 }
 
-function drawChart(arrX, arrY, color, transparent){
+function drawChart(arrX, arrY, color, transparent, label){
+    var label = typeof label !== 'undefined' ?  label : 'Component';
     // Рисует график по массивам arrX, arrY цвета color - может это стринг, 
     // пока не знаю, надо почитать документацию, 
     // transparent - прозрачность этого графика :)
@@ -22,7 +23,7 @@ function drawChart(arrX, arrY, color, transparent){
     data.push({
         data: arrY,
         backgroundColor: [bgColor],
-        label: 'Component',
+        label: label,
         borderWidth: 1
     });
     var myChart = new Chart(ctx, {
