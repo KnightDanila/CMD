@@ -19,7 +19,7 @@ var INPUT = 1333;
  * Выходные нейроны - 
  */
 
-var networkWeight = [1, 1, 1];
+var networkWeight = [1, 1, 1, 1, 1];
 
 /*
  * Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | 
@@ -70,13 +70,13 @@ var inputNeurons = [
             {
                 question: "What hair color you like?",
                 answers: [
-                    "Black as coal", /* 0 */    /* YES in DB*/
-                    "Brown",                    /* YES in DB*/
-                    "Blond only",               /* YES in DB*/
+                    "Black as coal", /* 0 */                            /* YES in DB*/
+                    "Brown",                                            /* YES in DB*/
+                    "Blond only",                                       /* YES in DB*/
                     "Red like a fire",
-                    "White as snow",
+                    "White as snow",                                    /* YES in DB*/
                     "Green, crazy green",
-                    "No hair, I don`t like it, I am DIE HARD", /* 6 */
+                    "No hair, I don`t like it, I am DIE HARD", /* 6 */  
                     "Other"
                 ]
             },
@@ -167,7 +167,7 @@ var inputNeurons = [
                 answers: [
                     "Amber", /* 0 */    
                     "Blue",             /* YES in DB*/
-                    "Brown",
+                    "Brown",            
                     "Gray",
                     "Green",
                     "Hazel",            /* YES in DB*/
@@ -440,4 +440,9 @@ function NN_getNeuronN() {
 function NN_Answer(x) {
     var z = NN_getNeuronN();
     inputNeurons[z].answers.push(x);
+}
+
+/*_______________________ Learning System _______________________*/
+function learning(){
+    
 }
