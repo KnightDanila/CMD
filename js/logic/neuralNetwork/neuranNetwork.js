@@ -70,9 +70,9 @@ var inputNeurons = [
             {
                 question: "What hair color you like?",
                 answers: [
-                    "Black as coal", /* 0 */
-                    "Brown",
-                    "Blond only",
+                    "Black as coal", /* 0 */    /* YES in DB*/
+                    "Brown",                    /* YES in DB*/
+                    "Blond only",               /* YES in DB*/
                     "Red like a fire",
                     "White as snow",
                     "Green, crazy green",
@@ -83,10 +83,10 @@ var inputNeurons = [
             {
                 question: "How long is your hair?",
                 answers: [
-                    "Long",
-                    "Medium",
-                    "Short",
-                    "Other"
+                    "Long",     /* YES in DB*/
+                    "Medium",   /* YES in DB*/
+                    "Short",    /* YES in DB*/
+                    "Other"     /* YES in DB*/
                 ]
             }
         ],
@@ -165,12 +165,12 @@ var inputNeurons = [
             {
                 question: "What eyes color you like?",
                 answers: [
-                    "Amber", /* 0 */
-                    "Blue",
+                    "Amber", /* 0 */    
+                    "Blue",             /* YES in DB*/
                     "Brown",
                     "Gray",
                     "Green",
-                    "Hazel",
+                    "Hazel",            /* YES in DB*/
                     "Red",
                     "Other"
                 ]
@@ -441,4 +441,3 @@ function NN_Answer(x) {
     var z = NN_getNeuronN();
     inputNeurons[z].answers.push(x);
 }
-

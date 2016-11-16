@@ -10,7 +10,7 @@ var data = [];
 function loadPage() {
     var x = [1, 2, 3, 4, 5];
     var y = [10, 2, 1, 2, 10];
-    draw(x, y);
+    drawChart(x, y);
 }
 
 function drawChart(arrX, arrY, color, transparent){
