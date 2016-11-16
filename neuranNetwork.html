@@ -9,15 +9,22 @@ and open the template in the editor.
         <title>CMD</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Theme-->
         <link href="theme/style.css" rel="stylesheet" type="text/css"/>
         <link href="theme/videoBG/videoBG.css" rel="stylesheet" type="text/css"/>
         <link href="theme/modalDiv/modalDiv.css" rel="stylesheet" type="text/css"/>
         <link href="theme/linkDesigner/linkDesigner.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" href="theme/ideas-icon.png">
+        <!--LOG-->
+        <link href="js/log/log.css" rel="stylesheet" type="text/css"/>
+        <script src="js/log/log.js" type="text/javascript"></script>
+        <!--ChartJS-->
         <script src="js/libs/Chart.js/Chart.min.js" type="text/javascript"></script>
+        <!--Logic-->
         <script src="js/logic/fuzzySet/chart.js" type="text/javascript"></script>
         <script src="js/logic/fuzzySet/fuzzySet.js" type="text/javascript"></script>
         <script src="js/logic/neuralNetwork/neuranNetwork.js" type="text/javascript"></script>
+        <!--Characters-->
         <script src="js/characters/characters.js" type="text/javascript"></script>
     </head>
     <body onload="loadPage()">
@@ -49,7 +56,7 @@ and open the template in the editor.
                         You are IAm.name 
                     </div>
                     <div>
-                        <img alt="" src='js/characters/img/ZEmpty.png' id="CharacterImage" style='width: 30%;'/>
+                        <img alt="" src='js/characters/img/ZZZEmpty.png' id="CharacterImage" style='width: 30%;'/>
                     </div>
                     <canvas id='myChart' width='100' height='20'></canvas>
                 </div>
@@ -69,7 +76,7 @@ and open the template in the editor.
                             //answers[answersEnum[questionN - 1]] = (questionN === 1) ? ((document.getElementById('Answer').value === "Y" || document.getElementById('Answer').value === "y") ? "female" : "male") : (document.getElementById('Answer').value);
                             //document.getElementById('Question').innerHTML = questions[questionN];
                             QA();
-                            if (INPUT_HTML){
+                            if (INPUT_HTML) {
                                 NN_Answer(document.getElementById('Answer').value);
                             }
                             if (answers == 1333) {
@@ -111,7 +118,7 @@ and open the template in the editor.
                             };
                             document.getElementById("CharacterImage").onerror = function () {
                                 alert('картинка не существует');
-                                document.getElementById("CharacterImage").src = "js/characters/img/ZEmpty.png";
+                                document.getElementById("CharacterImage").src = "js/characters/img/ZZZEmpty.png";
                             };
 
                         }
@@ -122,13 +129,15 @@ and open the template in the editor.
             </div>
             <div id = "Enter" class="MD-option" onclick="answer();">ENTER</div>
             <div id = "Back" class="MD-option" style="display: none;" >BACK</div>
-            <div class="accordion vertical">
-                <input type="checkbox" id="checkbox-1" name="checkbox-accordion" />
-                <label for="checkbox-1">Log</label>
-                <div class="content" id="log">
-                    Logger
-                </div>
+        </div>
+        
+        <div class="accordion vertical">
+            <input type="checkbox" id="checkbox-1" name="checkbox-accordion" />
+            <label for="checkbox-1">Log</label>
+            <div class="content" id="log">
+                Logger
             </div>
         </div>
+        
     </body>
 </html>

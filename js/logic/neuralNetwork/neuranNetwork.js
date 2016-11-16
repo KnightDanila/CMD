@@ -393,8 +393,8 @@ function QA() {
                 question = inputNeurons[i].questions[inputNeurons[i].questionN].question;
                 answers = inputNeurons[i].questions[inputNeurons[i].questionN].answers;
                 /* 
-                 addToLog(question);
-                 addToLog(answers);
+                 log.add(question);
+                 log.add(answers);
                  */
                 if (N == questionN) {
                     inputNeurons[i].calculate();
@@ -412,7 +412,7 @@ function QA() {
             outputNeuron.calculate();
             IAm = characters[0];
         } else {
-            addToLog("Error in SYSTEM. hiddenNeurons.length = inputNeurons.length");
+            log.add("Error in SYSTEM. hiddenNeurons.length = inputNeurons.length");
         }
     }
 
@@ -421,9 +421,9 @@ function QA() {
      good = [0,1,2,1,3];
      neutral = [1,0,0,2,1];
      bad = [2,0,3,3,2];
-     addToLog(hiddenNeurons[2].calculate(good));
-     addToLog(hiddenNeurons[2].calculate(neutral));
-     addToLog(hiddenNeurons[2].calculate(bad));
+     log.add(hiddenNeurons[2].calculate(good));
+     log.add(hiddenNeurons[2].calculate(neutral));
+     log.add(hiddenNeurons[2].calculate(bad));
      */
 }
 
@@ -442,6 +442,3 @@ function NN_Answer(x) {
     inputNeurons[z].answers.push(x);
 }
 
-function addToLog(text) {
-    document.getElementById('log').innerHTML += '<br>' + text;
-}
