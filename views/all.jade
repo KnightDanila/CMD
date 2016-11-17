@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    h1 All characters
+    .chars-table
+        - for(var i = 0 ; i < chars.length; ++i)
+            .chars-row
+                -for (var char in chars[i])
+                    label.char= chars[i][char]
+    a(href='/') ← Back
