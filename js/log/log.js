@@ -14,9 +14,9 @@ var log = {
     elemID: 'log',
     add: function (text) {
         /* FOR testing */
-        alert(text);
+        //alert(text);
         console.log(text);
-        document.getElementById(this.elemID).innerHTML += '<br>' + text;
+        //document.getElementById(this.elemID).innerHTML += '<br>' + text;
     },
     updata: function () {
         document.getElementById(this.elemID).innerHTML = "";
