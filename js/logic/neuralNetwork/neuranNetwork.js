@@ -578,7 +578,7 @@ function QA() {
             IAm = typeof IAm !== 'undefined' ? IAm : {
                 "id": 0,
                 "img": "ZZZEmpty.png",
-                "name": "don't have analog in heroes. Be first :)",
+                "name": "not have analog in heroes. Be first :)",
                 "alterEgo": "-",
                 "height": 0,
                 "weight": 0,
