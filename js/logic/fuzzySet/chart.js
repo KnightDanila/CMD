@@ -11,6 +11,15 @@ function loadPage() {
     var x = [1, 2, 3, 4, 5];
     var y = [10, 2, 1, 2, 10];
     drawChart(x, y);
+    /*
+     * TEST 
+    var x1 = [1, 2, 3, 4, 5];
+    var y1 = [1, 2, 3, 4, 5];
+    var x2 = [6, 7, 8, 9, 10];
+    var y2 = [1, 2, 3, 4, 5];
+    drawChart(x1, y1);
+    drawChart(x2, y2);
+    */
 }
 
 function drawChart(arrX, arrY, color, transparent, label){

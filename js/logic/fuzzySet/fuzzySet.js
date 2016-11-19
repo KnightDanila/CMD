@@ -3,6 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var AI = {
+    FuzzySet: {
+        
+    }
+};
+
 var START = 0;
 var FINISH = 0;
 
@@ -109,7 +115,6 @@ function fuzzySetStart() {
     fuzzCharacterLooks = rules.calculate(fuzzAnswers);
     defuzzCharacter = defuzzification(fuzzCharacterLooks);
     log.add(defuzzCharacter);
-    FINISH = 1;
     IAm = WhoIAm(defuzzCharacter);
     log.add(IAm.name);
     defuzzificationChart();
@@ -162,6 +167,7 @@ function defuzzification(fuzzCharacterLooks) {
 }
 
 function AllCharactersOnFuzzySet() {
+    FINISH = 1;
     var charactersOnFuzzySet = [];
     for (var i = 0; i < characters.length; i++) {
         /*
@@ -171,6 +177,7 @@ function AllCharactersOnFuzzySet() {
          */
         charactersOnFuzzySet[i] = defuzzification(rules.calculate(fuzzification(characters[i])));
     }
+    FINISH = 0;
     return charactersOnFuzzySet;
 }
 

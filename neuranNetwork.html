@@ -72,13 +72,14 @@ and open the template in the editor.
                     function answer() {
                         document.getElementById('AnswerOptions').innerHTML = "";
                         document.getElementById('QuestionN').innerHTML = questionN + 1;
+                        document.getElementById('QuestionN').innerHTML += " (" + NN_getNeuronName() + " Neuron)";
                         if (questionN < questionsSize) {
                             //answers[answersEnum[questionN - 1]] = (questionN === 1) ? ((document.getElementById('Answer').value === "Y" || document.getElementById('Answer').value === "y") ? "female" : "male") : (document.getElementById('Answer').value);
                             //document.getElementById('Question').innerHTML = questions[questionN];
-                            QA();
                             if (INPUT_HTML) {
                                 NN_Answer(document.getElementById('Answer').value);
                             }
+                            QA();
                             if (answers == 1333) {
                                 document.getElementById('InputOption').style.visibility = "visible";
                                 document.getElementById('Enter').style.display = "block";
@@ -88,6 +89,7 @@ and open the template in the editor.
                                 document.getElementById('Enter').style.display = "none";
                                 INPUT_HTML = false;
                             }
+
 
                             document.getElementById('Question').innerHTML = question;
 
@@ -130,7 +132,7 @@ and open the template in the editor.
             <div id = "Enter" class="MD-option" onclick="answer();">ENTER</div>
             <div id = "Back" class="MD-option" style="display: none;" >BACK</div>
         </div>
-        
+
         <div class="accordion vertical">
             <input type="checkbox" id="checkbox-1" name="checkbox-accordion" />
             <label for="checkbox-1">Log</label>
@@ -138,6 +140,6 @@ and open the template in the editor.
                 Logger
             </div>
         </div>
-        
+
     </body>
 </html>

@@ -12,15 +12,16 @@
 var START = 0;
 var FINISH = 0;
 var INPUT = 1333;
-
 /*
  * Входные нейроны - просто принимают сигналы
  * Скрытые - производят расчет
  * Выходные нейроны - 
  */
-
+var AI = {
+    NN: {
+    }
+};
 var networkWeight = [1, 1, 1, 1, 1];
-
 /*
  * Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | 
  * man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
@@ -71,21 +72,21 @@ var inputNeurons = [
                 question: "What hair color you like?",
                 answers: [
                     "Black as coal", /* 0 */                            /* YES in DB*/
-                    "Brown",                                            /* YES in DB*/
-                    "Blond only",                                       /* YES in DB*/
+                    "Brown", /* YES in DB*/
+                    "Blond only", /* YES in DB*/
                     "Red like a fire",
-                    "White as snow",                                    /* YES in DB*/
+                    "White as snow", /* YES in DB*/
                     "Green, crazy green",
-                    "No hair, I don`t like it, I am DIE HARD", /* 6 */  
+                    "No hair, I don`t like it, I am DIE HARD", /* 6 */
                     "Other"
                 ]
             },
             {
                 question: "How long is your hair?",
                 answers: [
-                    "Long",     /* YES in DB*/
-                    "Medium",   /* YES in DB*/
-                    "Short",    /* YES in DB*/
+                    "Long", /* YES in DB*/
+                    "Medium", /* YES in DB*/
+                    "Short", /* YES in DB*/
                     "Other"     /* YES in DB*/
                 ]
             }
@@ -165,12 +166,12 @@ var inputNeurons = [
             {
                 question: "What eyes color you like?",
                 answers: [
-                    "Amber", /* 0 */    
-                    "Blue",             /* YES in DB*/
-                    "Brown",            
+                    "Amber", /* 0 */
+                    "Blue", /* YES in DB*/
+                    "Brown",
                     "Gray",
                     "Green",
-                    "Hazel",            /* YES in DB*/
+                    "Hazel", /* YES in DB*/
                     "Red",
                     "Other"
                 ]
@@ -205,12 +206,12 @@ var inputNeurons = [
         }
     }
 ];
-
 /*_______________________ HIDDEN NEURONS _______________________*/
 var hiddenNeurons = [
     /* FuzzySet */
     {
         name: "FuzzySet",
+        weight: 0.8,
         answers: [
             [
                 "female", /* 0 */
@@ -219,20 +220,26 @@ var hiddenNeurons = [
             ]
         ],
         calculate: function (inputAnswers) {
-            var outputAnswers = [];
-            for (var i = 0; i < this.answers.length; i++) {
+            var outputAnswers = {};
+            for (var i = 0; i < inputAnswers.length; i++) {
                 if (i == 0) {
-                    outputAnswers.push(this.answers[i][inputAnswers[i]]);
+                    outputAnswers[answersEnum[i]] = this.answers[i][inputAnswers[i]];
                 } else {
-                    outputAnswers.push(inputAnswers[i]);
+                    outputAnswers[answersEnum[i]] = inputAnswers[i];
                 }
             }
+            fuzzAnswers = fuzzification(outputAnswers);
+            fuzzCharacterLooks = rules.calculate(fuzzAnswers);
+            defuzzCharacter = defuzzification(fuzzCharacterLooks);
+            log.add(defuzzCharacter);
+            outputAnswers = [outputAnswers.gender, defuzzCharacter];
             return outputAnswers;
         }
     },
     /* Hair */
     {
         name: "Hair",
+        weight: 1,
         answers: [
             [
                 "black",
@@ -262,6 +269,7 @@ var hiddenNeurons = [
     /* Goodwill */
     {
         name: "Goodwill",
+        weight: 1,
         answers: [
             [
                 80, /* 0 */
@@ -322,6 +330,7 @@ var hiddenNeurons = [
     /* Eyes */
     {
         name: "Eyes",
+        weight: 1,
         answers: [
             [
                 "amber", /* 0 */
@@ -345,6 +354,7 @@ var hiddenNeurons = [
     /* Race */
     {
         name: "Race",
+        weight: 1,
         answers: [
             [
                 "human", /* 0 */
@@ -363,56 +373,228 @@ var hiddenNeurons = [
         }
     }
 ];
-
 /*_______________________ OUTPUT NEURONS _______________________*/
 var outputNeuron = {
-    calculate: function () {
-        hiddenNeurons
-        return 0;
+    compare: function (character, neuron, answers) {
+        //neuron = hiddenNeurons[0];
+        if (neuron.name == "FuzzySet") {
+            if (neuron.weight > 0.5) {
+                if (character.gender == answers[0] || answers[0] == "-") {
+                    if (charactersOnFuzzySet[character.id - 1] >= neuron.weight * answers[1]
+                            && charactersOnFuzzySet[character.id - 1] <= (2 - neuron.weight) * answers[1]
+                            ) {
+                        return true;
+                    }
+                }
+            } else {
+                if (charactersOnFuzzySet[character.id - 1] >= neuron.weight * answers[1]
+                        && charactersOnFuzzySet[character.id - 1] <= (2 - neuron.weight) * answers[1]
+                        ) {
+                    return true;
+                }
+            }
+        }
+        var hairColor = function () {
+            if (neuron.weight < 0.4) {
+                return ["-"];
+            }
+            if (neuron.weight <= 0.8 && neuron.weight >= 0.4) {
+                if (answers[0] == "black" || answers[0] == "brown") {
+                    return ["black", "brown"];
+                }
+                if (answers[0] == "blond" || answers[0] == "white") {
+                    return ["blond", "white"];
+                }
+            }
+
+            if (neuron.weight >= 0.8) {
+                return [answers[0]];
+            }
+            return 0;
+        };
+        var hairLength = function () {
+            if (neuron.weight < 0.4) {
+                return ["-"];
+            }
+            if (neuron.weight <= 0.8 && neuron.weight >= 0.4) {
+                if (answers[1] == "long") {
+                    return ["long", "medium"];
+                }
+                if (answers[1] == "medium") {
+                    return ["long", "medium", "short"];
+                }
+                if (answers[1] == "short") {
+                    return ["medium", "short", "-"];
+                }
+            }
+            if (neuron.weight >= 0.8) {
+                return [answers[1]];
+            }
+            return 0;
+        };
+        if (neuron.name == "Hair") {
+            for (var i = 0; i < hairColor().length; i++) {
+                if (character.hair.color == hairColor()[i] || hairColor()[i] == "-") {
+                    for (var j = 0; j < hairLength().length; j++) {
+                        if (character.hair.length == hairLength()[j] || hairLength()[j] == "-") {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        if (neuron.name == "Goodwill") {
+            if (character.alignment == answers) {
+                return true;
+            }
+        }
+
+        var eyesColor = function () {
+            if (neuron.weight < 0.4) {
+                return ["-"];
+            }
+            if (neuron.weight <= 0.8 && neuron.weight >= 0.4) {
+                if (answers == "amber" || answers == "hazel" || answers == "brown") {
+                    return ["amber", "hazel", "brown"];
+                }
+                if (answers == "blue" || answers == "gray") {
+                    return ["blue", "gray"];
+                }
+                return [answers];
+            }
+            if (neuron.weight >= 0.8) {
+                return [answers];
+            }
+            return 0;
+        };
+        if (neuron.name == "Eyes") {
+            for (var j = 0; j < eyesColor().length; j++) {
+                if (character.eyes == eyesColor()[j] || eyesColor()[j] == "-") {
+                    return true;
+                }
+            }
+        }
+        if (neuron.name == "Race") {
+            if (character.race == answers) {
+                return true;
+            }
+        }
+
+        return false;
+    },
+    calculate: function (inputNeuronsAnswers) {
+        var suitableCharacters = characters;
+        charactersOnFuzzySet = AllCharactersOnFuzzySet();
+        fuzzySetData = hiddenNeurons[0].calculate(inputNeuronsAnswers[0]);
+        for (var i = 0; i < hiddenNeurons.length; i++) {
+            for (var j = 0; j < suitableCharacters.length; j++)
+                if (i == 0) {
+                    if (!this.compare(suitableCharacters[j], hiddenNeurons[i], fuzzySetData)) {
+                        suitableCharacters.splice(j, 1);
+                        j = j - 1;
+                    }
+                } else {
+                    if (!this.compare(suitableCharacters[j], hiddenNeurons[i], hiddenNeurons[i].calculate(inputNeuronsAnswers[i]))) {
+                        suitableCharacters.splice(j, 1);
+                        j = j - 1;
+                    }
+                }
+        }
+
+        var min = 200;
+        var n = 0;
+        for (var i = 0; i < suitableCharacters.length; i++) {
+            if (min > Math.abs((fuzzySetData[1] - charactersOnFuzzySet[suitableCharacters[i].id - 1]))) {
+                min = Math.abs(fuzzySetData[1] - charactersOnFuzzySet[suitableCharacters[i].id - 1]);
+                n = i;
+            }
+        }
+        var output = [suitableCharacters[n], suitableCharacters];
+        return output;
     }
 };
-
 /*_______________________ MAIN _______________________*/
 var question = "";
 var answers;
 var questionsSize = 0;
 var questionN = 0;
 var IAm;
-
 for (var i = 0; i < inputNeurons.length; i++) {
     for (var j = 0; j < inputNeurons[i].questions.length; j++) {
         questionsSize++;
     }
 }
+
+/* Return number of neuron where questionN < .questions.length
+ * It mean that this neuron needs answering
+ * 
+ * @returns {Number}
+ */
+function NN_getNeuronN() {
+    for (var i = 0; i < inputNeurons.length; i++) {
+        if (inputNeurons[i].questionN < inputNeurons[i].questions.length) {
+            return i;
+        }
+    }
+    return inputNeurons.length - 1;
+}
+/* Returns the neuron name by number, or without number (in this case it will be current neuron)
+ * 
+ * @param {type} number
+ * @returns {String}
+ */
+function NN_getNeuronName(number) {
+    number = typeof number !== 'undefined' ? number : NN_getNeuronN();
+    return inputNeurons[number].name;
+}
+
 /*_______________________ Question Answering System _______________________*/
 function QA() {
 
     if (questionN < questionsSize) {
-        for (var i = 0, N = 0; i < inputNeurons.length; i++) {
-            for (; inputNeurons[i].questionN < inputNeurons[i].questions.length; ) {
-                question = inputNeurons[i].questions[inputNeurons[i].questionN].question;
-                answers = inputNeurons[i].questions[inputNeurons[i].questionN].answers;
-                /* 
-                 log.add(question);
-                 log.add(answers);
-                 */
-                if (N == questionN) {
-                    inputNeurons[i].calculate();
-                    return i;
-                }
-                N++;
-            }
-
-        }
+        var i = NN_getNeuronN();
+        question = inputNeurons[i].questions[inputNeurons[i].questionN].question;
+        answers = inputNeurons[i].questions[inputNeurons[i].questionN].answers;
+        /* 
+         log.add(question);
+         log.add(answers);
+         */
+        return 0;
     } else {
         if (hiddenNeurons.length = inputNeurons.length) {
-            for (var i = 0, N = 0; i < inputNeurons.length; i++) {
+            for (var i = 0; i < inputNeurons.length; i++) {
                 hiddenNeurons[i].calculate(inputNeurons[i].answers);
             }
-            outputNeuron.calculate();
-            IAm = characters[0];
+
+            IAm = outputNeuron.calculate(
+                    [
+                        inputNeurons[0].answers,
+                        inputNeurons[1].answers,
+                        inputNeurons[2].answers,
+                        inputNeurons[3].answers,
+                        inputNeurons[4].answers
+                    ]
+                    )[0];
+            IAm = typeof IAm !== 'undefined' ? IAm : {
+                "id": 0,
+                "img": "ZZZEmpty.png",
+                "name": "don't have analog in heroes. Be first :)",
+                "alterEgo": "-",
+                "height": 0,
+                "weight": 0,
+                "years": 0,
+                "gender": "-",
+                "hair": {
+                    "color": "-",
+                    "length": "-"
+                },
+                "eyes": "-",
+                "alignment": "-",
+                "race": "-"
+            }
+            ;
         } else {
-            log.add("Error in SYSTEM. hiddenNeurons.length = inputNeurons.length");
+            log.add("Error in SYSTEM. hiddenNeurons.length != inputNeurons.length");
         }
     }
 
@@ -427,22 +609,15 @@ function QA() {
      */
 }
 
-function NN_getNeuronN() {
-    for (var i = 0, N = 0; i < inputNeurons.length; i++) {
-        for (var j = 0; j < inputNeurons[i].questions.length; j++) {
-            if (N == questionN - 1) {
-                return i;
-            }
-            N++;
-        }
-    }
-}
+
 function NN_Answer(x) {
-    var z = NN_getNeuronN();
-    inputNeurons[z].answers.push(x);
+    var i = NN_getNeuronN();
+    inputNeurons[i].answers.push(x);
+    inputNeurons[i].calculate();
 }
 
 /*_______________________ Learning System _______________________*/
-function learning(){
-    
+function NN_learning() {
+
 }
+
