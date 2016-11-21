@@ -16,9 +16,9 @@ var log = {
     add: function (text) {
         /* FOR testing */
         if (this.ON){
-            alert(text);
+            //alert(text);
             console.log(text);
-            document.getElementById(this.elemID).innerHTML += '<br>' + text;
+            //document.getElementById(this.elemID).innerHTML += '<br>' + text;
         }
     },
     updata: function () {
