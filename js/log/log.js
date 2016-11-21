@@ -11,12 +11,15 @@
  */
 
 var log = {
+    ON: true,
     elemID: 'log',
     add: function (text) {
         /* FOR testing */
-        //alert(text);
-        console.log(text);
-        //document.getElementById(this.elemID).innerHTML += '<br>' + text;
+        if (this.ON){
+            //alert(text);
+            console.log(text);
+            //document.getElementById(this.elemID).innerHTML += '<br>' + text;
+        }
     },
     updata: function () {
         document.getElementById(this.elemID).innerHTML = "";

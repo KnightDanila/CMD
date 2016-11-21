@@ -10,7 +10,6 @@
  */
 
 var START = 0;
-var FINISH = 0;
 var INPUT = 1333;
 /*
  * Входные нейроны - просто принимают сигналы
@@ -618,6 +617,32 @@ function NN_Answer(x) {
 
 /*_______________________ Learning System _______________________*/
 function NN_learning() {
+    log.ON = false;
+    min = 10;
+    /*
+     IAm = outputNeuron.calculate(
+     [
+     FuzzySet   - Woman[0-Yes, 1-No, 2-Other], Height[int], Years[int], Weight[int]
+     Hair       - Color[0-black, 1-brown, 2-blond, 3-red, 4-white, 5-green, 6-nohair, 7-other], Long [0-long, 1-medium, 2-short, 3-other]
+     Goodwill   - Good[0,1,2,1,3], Neutral[1,0,0,2,1], Bad[2,0,3,3,2];
+     Eyes       - Color[0-Amber, 1-Blue, 2-Brown, 3-Gray, 4-Green, 5-Hazel, 6-Red, 7-Other]
+     Race       - [0-Human, 1-God, 2-Mutant, 3-Alien, 4-Other]
+     ]
+     )[0];
+     */
 
+    /*DC Comics | Batman | Bruce Wayne | Master detective | 188cm | 95kg | man | human | Detective Comics #27 (May 1939) | black | Good*/
+    IAm = outputNeuron.calculate(
+            [
+                [1, 188, 35, 95],
+                [0, 2],
+                [0, 1, 2, 1, 3],
+                [1],
+                [0]
+            ]
+            )[0];
+
+
+
+    log.ON = true;
 }
-
