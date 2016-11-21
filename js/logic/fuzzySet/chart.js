@@ -33,10 +33,10 @@ function loadPage() {
     // var x2 = [6, 7, 8, 9, 10];
     // var y2 = [1, 2, 3, 4, 5];
     // drawChart(x1, y1);
-    // //drawChart(x2, y2);
-    //
+    // drawChart(x2, y2);
+    // //
     // drawPoint(3, 4, 'testPoint');
-    // drawPoint(5, 8, 'Betmen')
+    // drawPoint(5, 8, 'Betmen');
 }
 
 // Рисует график по массивам arrX, arrY цвета color - может это стринг,
@@ -66,7 +66,12 @@ function drawChart(arrX, arrY, color, transparent, label){
     myChart.data.labels = myChart.data.labels.concat(arrX);
     //удаляем повторяющиеся элементы
     myChart.data.labels = Array.from(new Set(myChart.data.labels));
-    // labels.sort(compareNumeric);
+    if(arrX[0] != myChart.data.labels[0]){
+        var index = myChart.data.labels.indexOf(arrX[0]);
+        for(var i=0; i<index; i++){
+            obj.data.unshift(null);
+        }
+    }
     myChart.data.datasets.push(obj);
     myChart.update();
 }
@@ -80,30 +85,8 @@ function drawChartClear(){
 // Рисует точку, при наведении на которую выводится её название
 // myChart на этот момент уже должен быть иницилизирован
 function drawPoint(x, y, label){
-    // myChart.options.tooltips.custom = function (tooltip) {
-    //     if (!tooltip.body)
-    //         return;
-    //     tooltip.body[0].lines[0] = label;
-    // };
     drawChart([x], [y], 1, 1, label );
-
-    // var obj = {
-    //     type: 'bubble',
-    //     label: label,
-    //     data: [{
-    //         x: x,
-    //         y: y,
-    //         r: 5
-    //     }],
-    //     backgroundColor: "#FF6384"
-    // };
-    // myChart.data.datasets.push(obj);
-    // myChart.update();
-}
-
-function compareNumeric(a, b) {
-    if (a > b) return 1;
-    if (a < b) return -1;
+    myChart.data.datasets[myChart.data.datasets.length - 1].showLine = false;
 }
 
 function random() {
