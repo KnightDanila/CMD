@@ -319,28 +319,6 @@ var characters = [
      "years": 35,
      "gender": "man"
      },
-     // DC Comics | Catwoman | Selina Kyle | Superhuman strength | 175cm | 61kg | woman | human | Gotham City | black | Not good enough
-     {
-     "id": 15,
-     "img": "Catwoman.jpg",
-     "name": "Catwoman",
-     "alterEgo": "Selina Kyle",
-     "height": 175,
-     "weight": 61,
-     "years": 25,
-     "gender": "woman"
-     },
-     // Marvel Comics | Rogue | Anna Marie | Mastery of magic | 168cm | 54kg | woman | mutant | Avengers Annual #10 (1981) | brown | Not good enough
-     {
-     "id": 16,
-     "img": "Rogue.jpg",
-     "name": "Rogue",
-     "alterEgo": "Anna Marie",
-     "height": 168,
-     "weight": 54,
-     "years": 25,
-     "gender": "woman"
-     },
      // DC Comics | Atom Girl | Salu Digby | Superhuman strength | 175cm | 61kg | woman | human | Teen Titans/Legion Special #1 (2004) | black | Not good enough
      {
      "id": 17,
@@ -508,3 +486,33 @@ var characters = [
      }*/
 ];
 //characters[0].
+
+function addCharacter(img, name, alterEgo, height, weight, years, gender, hair, eyes, alignment, race) {
+    var newCharacter = {
+        "id": characters.length + 1,
+        "img": img,
+        "name": name,
+        "alterEgo": alterEgo,
+        "height": height,
+        "weight": weight,
+        "years": years,
+        "gender": gender,
+        "hair": {
+            "color": hair[0],
+            "length": hair[1]
+        },
+        "eyes": eyes,
+        "alignment": alignment,
+        "race": race
+    };
+    characters.push(newCharacter);
+}
+
+// DC Comics | Catwoman | Selina Kyle | Superhuman strength | 175cm | 61kg | woman | human | Gotham City | black | Not good enough
+addCharacter("Catwoman.jpg", "Catwoman", "Selina Kyle", 175, 61, 25, "female", ["black", "long"], "green", "good", "human");
+// Marvel Comics | Rogue | Anna Marie | Mastery of magic | 173cm | 54kg | woman | mutant | Avengers Annual #10 (1981) | brown | Not good enough
+addCharacter("Rogue.jpg", "Rogue", "Anna Marie", 173, 54, 20, "female", ["brown", "long"], "green", "good", "mutant");
+addCharacter("Poison-Ivy.jpg", "Poison Ivy", "Pamela Lillian Isley", 168, 50, 26, "female", ["red", "long"], "green", "bad", "human");
+addCharacter("Harley-Quinn.jpg", "Harley Quinn", "Harleen Francis Quinzel", 170, 63, 25, "female", ["blond", "long"], "blue", "bad", "human");
+addCharacter("Joker.jpg", "Joker", "Jack Napier", 196, 86, 35, "male", ["green", "medium"], "green", "bad", "human");
+addCharacter("Iron-Man.jpg", "Iron Man", "Tony Stark", 198, 90, 43, "male", ["black", "short"], "blue", "good", "human");

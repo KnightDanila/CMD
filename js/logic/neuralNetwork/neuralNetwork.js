@@ -313,7 +313,7 @@ var hiddenNeurons = [
             }
 
             goodwill = sum / outputAnswers.length;
-            if (goodwill > 70 && goodwill <= 100)
+            if (goodwill >= 70 && goodwill <= 100)
             {
                 return "good";
             } else {
@@ -482,7 +482,13 @@ var outputNeuron = {
         return false;
     },
     calculate: function (inputNeuronsAnswers) {
-        var suitableCharacters = characters;
+        /*
+         * http://stackoverflow.com/questions/597588/how-do-you-clone-an-array-of-objects-in-javascript
+         * В JS сложно копировать объекты, способ человека, которого я знаю, не подошел
+         * Нужно будет переписать эту функцию, так как копирование объектов не рационально
+         * Скорее всего нужно будет записывать в список ID персонажей, что подошли
+         */
+        var suitableCharacters = JSON.parse(JSON.stringify(characters));
         charactersOnFuzzySet = AllCharactersOnFuzzySet();
         fuzzySetData = hiddenNeurons[0].calculate(inputNeuronsAnswers[0]);
         for (var i = 0; i < hiddenNeurons.length; i++) {
