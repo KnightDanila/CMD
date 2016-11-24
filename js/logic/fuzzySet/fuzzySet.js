@@ -256,7 +256,8 @@ function defuzzificationChart() {
         rightCharacterLooksDefuzzyX[j] = i;
         rightCharacterLooksDefuzzyY[j] = Math.min(rightCharacterLooksOriginY[j], fuzzCharacterLooks.incredible);
     }
-
+    
+    drawChartClear();
     drawChart(leftCharacterLooksOriginX, leftCharacterLooksOriginY, 1, 0.5);
     drawChart(leftCharacterLooksDefuzzyX, leftCharacterLooksDefuzzyY, 1, 1, "Left");
     drawChart(middleCharacterLooksOriginX, middleCharacterLooksOriginY, 1, 0.5);
