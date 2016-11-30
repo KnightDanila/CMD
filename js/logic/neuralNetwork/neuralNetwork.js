@@ -20,7 +20,7 @@ var AI = {
     NN: {
     }
 };
-var networkWeight = [1, 1, 1, 1, 1];
+// var networkWeight = [1, 1, 1, 1, 1];
 /*
  * Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | 
  * man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
@@ -210,7 +210,7 @@ var hiddenNeurons = [
     /* FuzzySet */
     {
         name: "FuzzySet",
-        weight: 0.8,
+        weight: 1,
         answers: [
             [
                 "female", /* 0 */
@@ -313,7 +313,7 @@ var hiddenNeurons = [
             }
 
             goodwill = sum / outputAnswers.length;
-            if (goodwill > 70 && goodwill <= 100)
+            if (goodwill >= 70 && goodwill <= 100)
             {
                 return "good";
             } else {
@@ -329,7 +329,7 @@ var hiddenNeurons = [
     /* Eyes */
     {
         name: "Eyes",
-        weight: 1,
+        weight: 1.0,
         answers: [
             [
                 "amber", /* 0 */
@@ -482,7 +482,13 @@ var outputNeuron = {
         return false;
     },
     calculate: function (inputNeuronsAnswers) {
-        var suitableCharacters = characters;
+        /*
+         * http://stackoverflow.com/questions/597588/how-do-you-clone-an-array-of-objects-in-javascript
+         * В JS сложно копировать объекты, способ человека, которого я знаю, не подошел
+         * Нужно будет переписать эту функцию, так как копирование объектов не рационально
+         * Скорее всего нужно будет записывать в список ID персонажей, что подошли
+         */
+        var suitableCharacters = JSON.parse(JSON.stringify(characters));
         charactersOnFuzzySet = AllCharactersOnFuzzySet();
         fuzzySetData = hiddenNeurons[0].calculate(inputNeuronsAnswers[0]);
         for (var i = 0; i < hiddenNeurons.length; i++) {
@@ -617,8 +623,73 @@ function NN_Answer(x) {
 
 /*_______________________ Learning System _______________________*/
 function NN_learning() {
-    log.ON = false;
-    min = 10;
+    log.add("Before learning");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
+
+    function compare(suitableCharacters, needCharacter) {
+        for (var i = 0; i < suitableCharacters.length; i++) {
+            if (suitableCharacters[i].name == needCharacter) {
+                return true;
+            }
+        }
+        return false;
+    }
+    function learning(suitableCharacters, needCharacter, precision) {
+        log.ON = false;
+        precision = typeof precision !== 'undefined' ? precision : 1000;
+        var step = precision;
+        var precision = 1 / precision;
+        var tempWeight = 0;
+        var tempWeightI = -1;
+        var tempGoodWeight = 0;
+        for (var i = 0; i < hiddenNeurons.length && !compare(outputNeuron.calculate(suitableCharacters)[1], needCharacter); i++) {
+            // Save weight of neuron
+            if (tempWeightI != i) {
+                tempWeightI = i;
+                tempWeight = hiddenNeurons[i].weight;
+            }
+            hiddenNeurons[i].weight = hiddenNeurons[i].weight - hiddenNeurons[i].weight / step;
+            // It Starts count the weight
+            if (!compare(outputNeuron.calculate(suitableCharacters)[1], needCharacter)) {
+
+                if (hiddenNeurons[i].weight > 1) {
+                    hiddenNeurons[i].weight = 1;
+                } else {
+                    hiddenNeurons[i].weight = hiddenNeurons[i].weight + hiddenNeurons[i].weight / step;
+                    step = step / 2;
+                }
+                if (step < 1) {
+                    step = 1;
+                    hiddenNeurons[i].weight = tempWeight;
+                } else {
+                    i = i - 1;
+                }
+            } else {
+                for (; compare(outputNeuron.calculate(suitableCharacters)[1], needCharacter); ) {
+                    tempGoodWeight = hiddenNeurons[i].weight;
+                    hiddenNeurons[i].weight = hiddenNeurons[i].weight + precision;
+                    // precision = precision * 2;
+                }
+                hiddenNeurons[i].weight = tempGoodWeight;
+                if (hiddenNeurons[i].weight > 1) {
+                    hiddenNeurons[i].weight = 1;
+                }
+            }
+            // hiddenNeurons[i].weight < 0.1 -> because I know that it must have weight >= 0 || 0.1
+            if (i == -1) {
+                if (hiddenNeurons[i + 1].weight < 0.1) {
+                    hiddenNeurons[i + 1].weight = tempWeight;
+                }
+            } else {
+                if (hiddenNeurons[i].weight < 0.1) {
+                    hiddenNeurons[i].weight = tempWeight;
+                }
+            }
+        }
+        log.ON = true;
+    }
     /*
      IAm = outputNeuron.calculate(
      [
@@ -632,17 +703,96 @@ function NN_learning() {
      */
 
     /*DC Comics | Batman | Bruce Wayne | Master detective | 188cm | 95kg | man | human | Detective Comics #27 (May 1939) | black | Good*/
-    IAm = outputNeuron.calculate(
-            [
-                [1, 188, 35, 95],
-                [0, 2],
-                [0, 1, 2, 1, 3],
-                [1],
-                [0]
-            ]
-            )[0];
+    var Batman1 = [
+        [1, 188, 35, 95],
+        [0, 2],
+        [0, 1, 2, 1, 3],
+        [1],
+        [0]
+    ];
+    learning(Batman1, "Batman");
+    log.add("In learning - Good. Real Batman height 188, years 35, weight 95");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
+
+    /*DC Comics | Batman | Bruce Wayne | Master detective | 188cm | 95kg | man | human | Detective Comics #27 (May 1939) | black | Good*/
+    var Batman2 = [
+        [1, 160, 21, 60],
+        [0, 2],
+        [0, 1, 2, 1, 3],
+        [1],
+        [0]
+    ];
+    learning(Batman2, "Batman");
+    log.add("In learning - false Batman height 160, years 21, weight 60");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
+
+    /*DC Comics | Batman | Bruce Wayne | Master detective | 188cm | 95kg | man | human | Detective Comics #27 (May 1939) | black | Good*/
+    var Batman3 = [
+        [1, 180, 33, 90],
+        [0, 2],
+        [0, 1, 2, 1, 3],
+        [1],
+        [0]
+    ];
+    learning(Batman3, "Batman");
+    log.add("In learning - almost Batman height 180, years 33, weight 90");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
+
+    // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
+    var Wolverine1 = [
+        [1, 174, 40, 100], // [1, 176, 40, 166],
+        [0, 2], // [0, 2],
+        [0, 1, 2, 1, 3], // [0, 1, 2, 1, 3],
+        [1], // [1],
+        [2]  // [2]
+    ];
+    learning(Wolverine1, "Wolverine");
+    log.add("In learning - almost Wolverine height 174 (176), years 40 (40), weight 100 (166)");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
+
+    /*
+     // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
+     var Wolverine2 = [
+     [1, 176, 40, 166],  //[1, 176, 40, 166],
+     [0, 2], // [0, 2],
+     [0, 1, 2, 1, 3], // [0, 1, 2, 1, 3],
+     [3], // [1],
+     [2]  // [2]
+     ];
+     learning(Wolverine2, "Wolverine");
+     log.add("In learning - almost Wolverine but have gray eyes");
+     for (var i = 0; i < hiddenNeurons.length; i++) {
+     log.add(hiddenNeurons[i].weight);
+     }
+     */
+
+    // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
+    var Wolverine3 = [
+        [1, 170, 40, 90], // [1, 176, 40, 166],
+        [0, 2], // [0, 2],
+        [0, 1, 2, 1, 3], // [0, 1, 2, 1, 3],
+        [1], // [1],
+        [2]  // [2]
+    ];
+    learning(Wolverine3, "Wolverine");
+    log.add("In learning - almost Wolverine height 170 (176), years 40 (40), weight 90 (166)");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
 
 
 
-    log.ON = true;
+
+    log.add("After learning");
+    for (var i = 0; i < hiddenNeurons.length; i++) {
+        log.add(hiddenNeurons[i].weight);
+    }
 }
