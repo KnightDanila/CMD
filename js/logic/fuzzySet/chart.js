@@ -22,11 +22,13 @@ var options = {
 };
 
 function loadPage() {
+    ////////// Smile
     var x = [1, 2, 3, 4, 5];
     var y = [10, 2, 1, 2, 10];
-    drawChart(x, y);
+    drawChart(x, y, 0, 0.5, "SMILE");
 
-    // TEST
+    // TEST GRAPH
+    /*
     var x1 = [1, 2, 3, 4, 5];
     var y1 = [1, 2, 3, 4, 5];
 
@@ -34,9 +36,12 @@ function loadPage() {
     var y2 = [1, 2, 3, 4, 5];
     drawChart(x1, y1);
     drawChart(x2, y2);
-    //
+    */
+    // TEST GRAPH POINTS
+    /*
     drawPoint(3, 4, 'testPoint');
     drawPoint(5, 8, 'Batmen');
+    */
 }
 
 // Рисует график по массивам arrX, arrY цвета color - может это стринг,
