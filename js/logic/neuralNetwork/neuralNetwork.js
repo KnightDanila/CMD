@@ -475,7 +475,7 @@ var outputNeuron = {
             }
         }
         if (neuron.name == "Race") {
-            if (character.race == answers) {
+            if (character.race == answers || answers == "-") {
                 return true;
             }
         }
