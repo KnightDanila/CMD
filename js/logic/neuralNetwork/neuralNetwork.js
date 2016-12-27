@@ -530,7 +530,20 @@ for (var i = 0; i < inputNeurons.length; i++) {
         questionsSize++;
     }
 }
-
+/*
+ * Return number of question questionN < .questions.length
+ * @returns {Number}
+ */
+function NN_getQuestionN() {
+    var N = 0;
+    for (var i = 0; i < inputNeurons.length; i++) {
+        N+=inputNeurons[i].questionN;
+    }
+//    if(NN_getNeuronN()==0){
+//        return N+(NN_getNeuronN()+1);
+//    }
+    return N;//+(NN_getNeuronN());
+}
 /* Return number of neuron where questionN < .questions.length
  * It mean that this neuron needs answering
  * 

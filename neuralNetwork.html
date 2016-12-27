@@ -70,14 +70,19 @@ and open the template in the editor.
                 <script>
                     var INPUT_HTML = false;
                     function answer() {
+                        questionN = NN_getQuestionN();
                         document.getElementById('AnswerOptions').innerHTML = "";
                         document.getElementById('QuestionN').innerHTML = questionN + 1;
                         document.getElementById('QuestionN').innerHTML += " (" + NN_getNeuronName() + " Neuron)";
+
                         if (questionN < questionsSize) {
                             //answers[answersEnum[questionN - 1]] = (questionN === 1) ? ((document.getElementById('Answer').value === "Y" || document.getElementById('Answer').value === "y") ? "female" : "male") : (document.getElementById('Answer').value);
                             //document.getElementById('Question').innerHTML = questions[questionN];
                             if (INPUT_HTML) {
                                 NN_Answer(document.getElementById('Answer').value);
+                                questionN = NN_getQuestionN();
+                                document.getElementById('QuestionN').innerHTML = questionN + 1;
+                                document.getElementById('QuestionN').innerHTML += " (" + NN_getNeuronName() + " Neuron)";
                             }
                             QA();
                             if (answers == 1333) {
@@ -95,10 +100,9 @@ and open the template in the editor.
 
                             for (var i = 0; i < answers.length; i++) {
                                 document.getElementById('AnswerOptions').innerHTML += "<div onclick= 'NN_Answer(" + i + "); answer();' class='MD-option'>" + answers[i] + "</div>";
+
                             }
 
-
-                            questionN++;
                         } else {
                             QA();
                             document.getElementById('Answer').style.visibility = "hidden";
