@@ -376,7 +376,7 @@ function addCharacter(img, name, alterEgo, height, weight, years, gender, hair, 
     }
 }
 function printCharactersNToElemID(elemID) {
-    document.getElementById(elemID).innerHTML = characters.length + " characters in DataBase";
+    document.getElementById(elemID).innerHTML = characters.length + " characters in <a href='js/characters/characters.js'>DataBase</a>";
 }
 
 // DC Comics | Catwoman | Selina Kyle | Superhuman strength | 175cm | 61kg | woman | human | Gotham City | black | Not good enough
