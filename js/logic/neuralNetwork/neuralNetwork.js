@@ -443,12 +443,38 @@ var outputNeuron = {
                 }
             }
         }
+        var goodwill = function () {
+            if (neuron.weight < 0.4) {
+                return ["-"];
+            }
+            if (neuron.weight <= 0.8 && neuron.weight >= 0.4) {
+                if (answers == "good") {
+                    return ["good"];
+                }
+                if (answers == "neutral" || answers == "bad") {
+                    return ["neutral", "bad"];
+                }
+                return [answers];
+            }
+            if (neuron.weight >= 0.8) {
+                return [answers];
+            }
+            return 0;
+        };
         if (neuron.name == "Goodwill") {
-            if (character.alignment == answers) {
-                return true;
+            for (var j = 0; j < goodwill().length; j++) {
+                if (character.alignment == goodwill()[j] || goodwill()[j] == "-") {
+                    return true;
+                }
             }
         }
-
+        /*
+         if (neuron.name == "Goodwill") {
+         if (character.alignment == answers) {
+         return true;
+         }
+         }
+         */
         var eyesColor = function () {
             if (neuron.weight < 0.4) {
                 return ["-"];
@@ -474,11 +500,38 @@ var outputNeuron = {
                 }
             }
         }
+        var race = function () {
+            if (neuron.weight < 0.4) {
+                return ["-"];
+            }
+            if (neuron.weight <= 0.8 && neuron.weight >= 0.4) {
+                if (answers == "human" || answers == "mutant") {
+                    return ["human", "mutant"];
+                }
+                if (answers == "god" || answers == "alien") {
+                    return ["god", "alien"];
+                }
+                return [answers];
+            }
+            if (neuron.weight >= 0.8) {
+                return [answers];
+            }
+            return 0;
+        };
         if (neuron.name == "Race") {
-            if (character.race == answers || answers == "-") {
-                return true;
+            for (var j = 0; j < race().length; j++) {
+                if (character.rase == race()[j] || race()[j] == "-") {
+                    return true;
+                }
             }
         }
+        /*
+         if (neuron.name == "Race") {
+         if (character.race == answers || answers == "-") {
+         return true;
+         }
+         }
+         */
 
         return false;
     },
@@ -537,7 +590,7 @@ for (var i = 0; i < inputNeurons.length; i++) {
 function NN_getQuestionN() {
     var N = 0;
     for (var i = 0; i < inputNeurons.length; i++) {
-        N+=inputNeurons[i].questionN;
+        N += inputNeurons[i].questionN;
     }
 //    if(NN_getNeuronN()==0){
 //        return N+(NN_getNeuronN()+1);
@@ -594,6 +647,62 @@ function QA() {
                         inputNeurons[4].answers
                     ]
                     )[0];
+            if (typeof IAm == 'undefined') {
+                var newHiddenNeuronsWeight = false;
+                while (typeof IAm == 'undefined' && (!newHiddenNeuronsWeight)) {
+
+                    // FuzzySet
+                    if (hiddenNeurons[0].weight > 0.85) {
+                        hiddenNeurons[0].weight = hiddenNeurons[0].weight - 0.01;
+                    } else {
+                        // hairColor
+                        if (hiddenNeurons[1].weight > 0.70) {
+                            hiddenNeurons[1].weight = 0.70;
+                        } else {
+                            // Goodwill - вес [2] не влияет
+                            // Goodwill
+                            if (hiddenNeurons[2].weight > 0.70) {
+                                hiddenNeurons[2].weight = 0.70;
+                            } else {
+                                // Eyes
+                                if (hiddenNeurons[3].weight > 0.70) {
+                                    hiddenNeurons[3].weight = 0.70;
+                                } else {
+                                    //Race - вес [4]
+                                    if (hiddenNeurons[4].weight > 0.70) {
+                                        hiddenNeurons[4].weight = 0.70;
+                                    } else {
+                                        // FuzzySet
+                                        if (hiddenNeurons[0].weight > 0.81) {
+                                            hiddenNeurons[0].weight = hiddenNeurons[0].weight - 0.01;
+                                        } else {
+                                            //Race - вес [4]
+                                            if (hiddenNeurons[4].weight > 0.40) {
+                                                hiddenNeurons[4].weight = 0.40;
+                                            } else {
+                                                newHiddenNeuronsWeight = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    log.add("New Hidden Neurons Weight");
+                    for (var i = 0; i < hiddenNeurons.length; i++) {
+                        log.add(hiddenNeurons[i].weight);
+                    }
+                    IAm = outputNeuron.calculate(
+                            [
+                                inputNeurons[0].answers,
+                                inputNeurons[1].answers,
+                                inputNeurons[2].answers,
+                                inputNeurons[3].answers,
+                                inputNeurons[4].answers
+                            ]
+                            )[0];
+                }
+            }
             IAm = typeof IAm !== 'undefined' ? IAm : {
                 "id": 0,
                 "img": "ZZZEmpty.png",
