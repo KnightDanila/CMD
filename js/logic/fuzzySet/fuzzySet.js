@@ -163,6 +163,7 @@ function defuzzification(fuzzCharacterLooks) {
             fuzzCharacterLooks.incredible * terms.characterLooks.impressive[1]
             ) /
             (fuzzCharacterLooks.shallow + fuzzCharacterLooks.impressive + fuzzCharacterLooks.incredible);
+            //(terms.characterLooks.impressive[0] + ((terms.characterLooks.shallow[1] + terms.characterLooks.incredible[0]) / 2) + terms.characterLooks.impressive[1]);
     return defuzzCharacter;
 }
 
