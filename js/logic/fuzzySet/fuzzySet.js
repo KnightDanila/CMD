@@ -72,7 +72,8 @@ var terms = {
          big: [70, 1000]
          */
         low: [Characters.getMinWeight(), Characters.getAvgWeight()],
-        middle: [(Characters.getMinWeight() + Characters.getAvgWeight()) / 2, (Characters.getAvgWeight() + Characters.getMaxWeight()) / 2],
+        //middle: [(Characters.getMinWeight() + Characters.getAvgWeight()) / 2, (Characters.getAvgWeight() + Characters.getMaxWeight()) / 2],
+        middle: [(Characters.getMinWeight() + Characters.getAvgWeight()) / 2, Characters.getMinWeight() + Characters.getAvgWeight()],
         big: [Characters.getAvgWeight(), Characters.getMaxWeight()]
     },
     immortal: {
@@ -122,7 +123,7 @@ var rules = {
      * Этот вариант работает только для моего случая
      */
 
-    calculateOriginal: function (fuzzAnswers) {
+    calculate: function (fuzzAnswers) {
         var fuzzCharacterLooks = {};
 
         fuzzCharacterLooks.shallow = (fuzzAnswers[0] /*short*/ + fuzzAnswers[3] /*young*/ + fuzzAnswers[6] /*low weight*/) / 3;
@@ -181,7 +182,7 @@ var rules = {
      
      
      */
-    calculate: function (fuzzAnswers) {
+    calculateNew: function (fuzzAnswers) {
         var fuzzCharacterLooks = {};
 
 
