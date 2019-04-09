@@ -69,7 +69,7 @@ var inputNeurons = [
         questionN: 0,
         questions: [
             {
-                question: "What hair color you like?",
+                question: "What hair color do you like?",
                 answers: [
                     "Black as coal", /* 0 */                            /* YES in DB*/
                     "Brown", /* YES in DB*/
@@ -164,7 +164,7 @@ var inputNeurons = [
         questionN: 0,
         questions: [
             {
-                question: "What eyes color you like?",
+                question: "What eyes color do you like?",
                 answers: [
                     "Amber", /* 0 */
                     "Blue", /* YES in DB*/
@@ -378,7 +378,7 @@ var outputNeuron = {
     compare: function (character, neuron, answers) {
         //neuron = hiddenNeurons[0];
         if (neuron.name == "FuzzySet") {
-            if (neuron.weight > 0.5) {
+            if (neuron.weight > 0.15) {
                 if (character.gender == answers[0] || answers[0] == "-") {
                     if (charactersOnFuzzySet[character.id - 1] >= neuron.weight * answers[1]
                             && charactersOnFuzzySet[character.id - 1] <= (2 - neuron.weight) * answers[1]
@@ -899,14 +899,14 @@ function NN_learning() {
 
     // Marvel Comics | Wolverine | James Howlett | Regenerative healing factor | 176cm | 166kg | man | mutant | Cameo: The Incredible Hulk #180 (Oct. 1974) | black | Not good enough
     var Wolverine3 = [
-        [1, 170, 40, 90], // [1, 176, 40, 166],
+        [1, 170, 40, 150], // [1, 176, 40, 166],
         [0, 2], // [0, 2],
         [0, 1, 2, 1, 3], // [0, 1, 2, 1, 3],
         [1], // [1],
         [2]  // [2]
     ];
     learning(Wolverine3, "Wolverine");
-    log.add("In learning - almost Wolverine height 170 (176), years 40 (40), weight 90 (166)");
+    log.add("In learning - almost Wolverine height 170 (176), years 40 (40), weight 150 (166)");
     for (var i = 0; i < hiddenNeurons.length; i++) {
         log.add(hiddenNeurons[i].weight);
     }
